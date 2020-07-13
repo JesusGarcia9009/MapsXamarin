@@ -7,6 +7,9 @@
     mc:Ignorable="d"
     Title="Get Easy!"
     x:Class="GoogleMaps.Views.Detail">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="outline_search.png" Text="Search" Clicked="Search_Clicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 

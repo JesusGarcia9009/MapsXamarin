@@ -1,0 +1,39 @@
+{
+  "establecimientos": [
+    {
+      "idEstablecimiento": 1,
+      "nombreEstablecimiento": "Patio Vella vista 1"
+    },
+    {
+      "idEstablecimiento": 2,
+      "nombreEstablecimiento": "Patio Vella vista 2"
+    },
+    {
+      "idEstablecimiento": 3,
+      "nombreEstablecimiento": "Patio Vella vista 3"
+    },
+    {
+      "idEstablecimiento": 4,
+      "nombreEstablecimiento": "Patio Vella vista 4"
+    }
+  ],
+  "productos": [
+    {
+      "idProducto": 1,
+      "nombreProducto": "Cerveza 1"
+    },
+    {
+      "idProducto": 2,
+      "nombreProducto": "Cerveza 2"
+    },
+    {
+      "idProducto": 3,
+      "nombreProducto": "Cerveza 3"
+    },
+    {
+      "idProducto": 4,
+      "nombreProducto": "Cerveza 4"
+    }
+  ]
+
+}

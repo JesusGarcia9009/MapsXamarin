@@ -18,4 +18,19 @@ namespace GoogleMaps
 
     }
 
+    public class DetailPlace
+    {
+        public string address { get; set; }
+        public string description { get; set; }
+        public double dist { get; set; }
+        public string ecategory_name { get; set; }
+        public string ename { get; set; }
+        public double lat { get; set; }
+        public double lon { get; set; }
+        public string oname { get; set; }
+
+        public string Imagenes { get; set; }
+
+    }
+
 }

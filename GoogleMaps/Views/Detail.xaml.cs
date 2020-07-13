@@ -1,4 +1,5 @@
 ﻿using Android.Graphics;
+using GoogleMaps.Entities;
 using GoogleMaps.Services;
 using Newtonsoft.Json;
 using System;
@@ -20,7 +21,9 @@ namespace GoogleMaps.Views
     {
         Xamarin.Essentials.Location location = null;
 
-        public Detail()
+        GoogleMaps.Entities.Filters _filter = new Entities.Filters();
+
+        public Detail(String tipoEstablecimiento, String trago)
         {
             InitializeComponent();
 
@@ -33,7 +36,7 @@ namespace GoogleMaps.Views
             //obtener lugares segun ubicacion
             this.ListOfPlaces(this.location.Latitude, this.location.Longitude);
 
-            // print my location
+            // dibujar mi posicion
             this.PrintMyPosition(this.location.Latitude, this.location.Longitude);
 
             // Use this for a single pin
@@ -97,35 +100,29 @@ namespace GoogleMaps.Views
             }
         }
 
-        private Bitmap getIconByUrl(string url)
-        {
-            Bitmap image = null;
-            using (WebClient webClient = new WebClient())
-            {
-                byte[] array = webClient.DownloadData(url);
-                if (array != null && array.Length > 0)
-                {
-                    image = BitmapFactory.DecodeByteArray(array, 0, array.Length);
-                }
-            }
-            return image;
-        }
-
-        private void GenerateAPin()
-        {
-            var pin = new Pin { Type = PinType.Place, Label = "This is my home", Address = "Here", Position = new Position(-23.68, -46.87) };
-            map.Pins.Add(pin);
-        }
-
         private void Map_InfoWindowClicked(object sender, InfoWindowClickedEventArgs e)
         {
-            //Put your code here
             Pin item = e.Pin;
-            DisplayAlert(item.Label, item.Address, "Cerrar");
-            //RepositionPin(e.Pin);
+            //DisplayAlert(item.Label, item.Address, "Cerrar");
 
+            ModalDetailPlace page2 = new ModalDetailPlace(item);
 
+            page2.Disappearing += OnPage2Disappearing;
+            Navigation.PushAsync(page2);
+        }
 
+        private async void Search_Clicked(object sender, EventArgs e) 
+        {
+            FiltersViewModel x = _filter.refreshData();
+            ModalFilter page2 = new ModalFilter(x);
+
+            page2.Disappearing += OnPage2Disappearing;
+            await Navigation.PushAsync(page2);
+        }
+
+        private void OnPage2Disappearing(object sender, EventArgs eventArgs)
+        {
+            ((ModalFilter)sender).Disappearing -= OnPage2Disappearing; //Unsubscribe from the event to allow the GC to collect the page and prevent memory leaks
         }
 
         private async void GetLocation()

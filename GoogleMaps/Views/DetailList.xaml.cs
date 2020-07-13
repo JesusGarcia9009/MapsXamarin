@@ -112,5 +112,20 @@ namespace GoogleMaps.Views
             });
             return oMenuPrincipal;
         }
+
+        private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            listViewPlace.BeginRefresh();
+
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+                listViewPlace.ItemsSource = ObtenerListPlaces();
+            else
+                listViewPlace.ItemsSource = ObtenerListPlaces().Where(i => i.Opcion.Contains(e.NewTextValue));
+
+            listViewPlace.EndRefresh();
+        }
+
+
+
     }
 }

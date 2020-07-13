@@ -7,7 +7,8 @@
              Title="List of places"
              x:Name="BrowseItemsPage"
              x:Class="GoogleMaps.Views.DetailList">
-    <ContentPage.Content>
+    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+        <SearchBar Placeholder="Buscar..." TextChanged="SearchBar_OnTextChanged"></SearchBar>
         <ListView x:Name="listViewPlace" CachingStrategy="RecycleElement" HasUnevenRows="True" >
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -22,6 +23,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </ContentPage.Content>
+    </StackLayout>
 </ContentPage>
                    

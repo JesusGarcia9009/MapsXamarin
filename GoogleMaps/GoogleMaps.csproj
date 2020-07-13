@@ -6,10 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Establecimiento.json" />
     <None Remove="Places.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Establecimiento.json" />
     <EmbeddedResource Include="Places.json" />
   </ItemGroup>
 
@@ -28,12 +30,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ModalDetailPlace.xaml.cs">
+      <DependentUpon>ModalDetailPlace.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ModalFilter.xaml.cs">
+      <DependentUpon>ModalFilter.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\DetailList.xaml.cs">
       <DependentUpon>DetailList.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Views\ModalDetailPlace.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ModalFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
