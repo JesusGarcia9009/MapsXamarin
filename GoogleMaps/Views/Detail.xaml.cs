@@ -107,8 +107,13 @@ namespace GoogleMaps.Views
 
             ModalDetailPlace page2 = new ModalDetailPlace(item);
 
-            page2.Disappearing += OnPage2Disappearing;
+            page2.Disappearing += OnDetailPlaceDisappearing;
             Navigation.PushAsync(page2);
+        }
+
+        private void OnDetailPlaceDisappearing(object sender, EventArgs eventArgs)
+        {
+            ((ModalDetailPlace)sender).Disappearing -= OnDetailPlaceDisappearing; //Unsubscribe from the event to allow the GC to collect the page and prevent memory leaks
         }
 
         private async void Search_Clicked(object sender, EventArgs e) 
@@ -119,6 +124,8 @@ namespace GoogleMaps.Views
             page2.Disappearing += OnPage2Disappearing;
             await Navigation.PushAsync(page2);
         }
+
+        
 
         private void OnPage2Disappearing(object sender, EventArgs eventArgs)
         {
