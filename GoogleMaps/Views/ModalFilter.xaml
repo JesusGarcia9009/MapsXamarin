@@ -4,37 +4,56 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
     mc:Ignorable="d"
     Title="Busqueda!"
+    xmlns:local="clr-namespace:GoogleMaps.Styles"
     x:Class="GoogleMaps.Views.ModalFilter">
 
     <ContentPage.Content>
-        <StackLayout Margin="20,20,20,20">
-            <Label Text="Información Adicional" 
-               HorizontalOptions="Center"
-               Font="40"
-               TextColor="Black"
-               HorizontalTextAlignment="Center"
-               />
-            <Label Text="Esto es una pagina de información a dicional, tiene que rellenar todos los campos para proceder al registro. Gracias."
-                   HorizontalOptions="CenterAndExpand" 
-                   HorizontalTextAlignment="Center"/>
+        <Grid>
 
-            <!--<Label Text="{Binding Source={x:Reference picker}, Path=SelectedItem}" />-->
-            <Picker x:Name="esta" Title="Seleccione establecimiento" ItemsSource="{Binding Establecimientos}" 
-                    ItemDisplayBinding="{Binding nombreEstablecimiento}" SelectedItem="{Binding SelectedEstablecimiento}" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-            <Picker x:Name="prod" Title="Seleccione Producto" ItemsSource="{Binding Productos}" 
-                    ItemDisplayBinding="{Binding nombreProducto}" SelectedItem="{Binding SelectedProducto}" />
+            <skia:SKCanvasView x:Name="BackgroundGradient" Grid.RowSpan="2"
+            HorizontalOptions="Fill" PaintSurface="BackgroundGradient_PaintSurface" VerticalOptions="Fill" />
 
-            <Button x:Name="close"
-                Text="Buscar"
-                HorizontalOptions="CenterAndExpand" 
-                TextColor="White"
-                BackgroundColor="CadetBlue"
-                WidthRequest="200"
-                Clicked="Acept_Clicked"    
-                Margin="0,60,0,0"/>
-        </StackLayout>
+            <Image Grid.RowSpan="2" Aspect="AspectFill"
+            HorizontalOptions="Fill" VerticalOptions="End"
+            Source="{DynamicResource MountainImage}"/>
+
+
+            <StackLayout Padding="20,30,20,0">
+                <Grid Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="AUTO" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout>
+                        <Label Style="{StaticResource Header}" Text="Busqueda" />
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Style="{StaticResource SubTextSemiBold}" Text="Selecccione el filtro..." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                            <Picker x:Name="esta" Title="Seleccione establecimiento" ItemsSource="{Binding Establecimientos}" 
+                                ItemDisplayBinding="{Binding nombreEstablecimiento}" SelectedItem="{Binding SelectedEstablecimiento}" />
+
+                            <Picker x:Name="prod" Title="Seleccione Producto" ItemsSource="{Binding Productos}" 
+                                ItemDisplayBinding="{Binding nombreProducto}" SelectedItem="{Binding SelectedProducto}" />
+
+                            <Button x:Name="close" Text="Buscar" HorizontalOptions="CenterAndExpand"  TextColor="White" BackgroundColor="CadetBlue"
+                                WidthRequest="200" Clicked="Acept_Clicked" Margin="0,60,0,0"/>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

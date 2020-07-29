@@ -3,26 +3,52 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
-             Title="List of places"
+             xmlns:local="clr-namespace:GoogleMaps.Styles"
              x:Name="BrowseItemsPage"
              x:Class="GoogleMaps.Views.DetailList">
-    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
-        <SearchBar Placeholder="Buscar..." TextChanged="SearchBar_OnTextChanged"></SearchBar>
-        <ListView x:Name="listViewPlace" CachingStrategy="RecycleElement" HasUnevenRows="True" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell >
-                        <StackLayout Orientation="Horizontal">
-                            <Image Source="{Binding icon}"/>
-                            <StackLayout>
-                                <Label Text="{Binding Opcion}"/>
-                            </StackLayout>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
+    <ContentPage.Content>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <skia:SKCanvasView x:Name="BackgroundGradient" Grid.RowSpan="2"
+            HorizontalOptions="Fill" PaintSurface="BackgroundGradient_PaintSurface" VerticalOptions="Fill" />
+
+            <Image Grid.RowSpan="2" Aspect="AspectFill"
+            HorizontalOptions="Fill" VerticalOptions="End"
+            Source="{DynamicResource MountainImage}"/>
+
+
+            <StackLayout Padding="20,15,20,0">
+                <Grid Margin="0,2,0,0">
+                    
+
+                    <StackLayout>
+                        <Label Style="{StaticResource Header}" Text="Lugares" />
+                        <SearchBar Placeholder="Buscar..." TextChanged="SearchBar_OnTextChanged"></SearchBar>
+                        <ListView x:Name="listViewPlace" Margin="0,5,0,0" CachingStrategy="RecycleElement" HasUnevenRows="True" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell >
+                                        <StackLayout Orientation="Horizontal">
+                                            <Image Source="{Binding icon}"/>
+                                            <StackLayout>
+                                                <Label Text="{Binding Opcion}"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>
                    

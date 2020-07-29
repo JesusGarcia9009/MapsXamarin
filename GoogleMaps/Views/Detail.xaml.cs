@@ -148,7 +148,7 @@ namespace GoogleMaps.Views
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error verifica la wea");
+                Debug.WriteLine("Error verifica la wea" + e);
             }
         }
 

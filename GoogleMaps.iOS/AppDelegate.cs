@@ -22,7 +22,7 @@ namespace GoogleMaps.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
+            global::Xamarin.Forms.Forms.SetFlags(new string[] { "IndicatorView_Experimental", "CollectionView_Experimental" });
             Xamarin.FormsGoogleMaps.Init(AppConstants.GOOGLE_API_ACCESS_KEY);
             LoadApplication(new App());
 

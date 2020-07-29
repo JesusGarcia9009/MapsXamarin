@@ -1,25 +1,135 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-    mc:Ignorable="d"
-    Title="Detalle!"
-    x:Class="GoogleMaps.Views.ModalDetailPlace">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:local="clr-namespace:GoogleMaps.Styles"
+             x:Class="GoogleMaps.Views.ModalDetailPlace">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="PostTitleStyle" TargetType="Label">
+                <Setter Property="FontFamily"  Value ="Poppins-SemiBold.ttf#Poppins" />
+                <Setter Property="FontSize" Value="10" />
+                <Setter Property="TextColor" Value="#000000" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="WidthRequest" Value="100" />
+                <Setter Property="Margin" Value="12, 12, 12, 6" />
+            </Style>
+            <Style x:Key="PostDateStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="Poppins-Medium.ttf#Poppins" />
+                <Setter Property="FontSize" Value="8" />
+                <Setter Property="TextColor" Value="#000000" />
+                <Setter Property="Margin" Value="12, 0, 12, 12" />
+            </Style>
 
+            <Style x:Key="SubTitleStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value ="Poppins-SemiBold.ttf#Poppins" />
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="12, 0" />
+            </Style>
+
+            <Style x:Key="DateStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="Poppins-Medium.ttf#Poppins" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="Margin" Value="12, 12, 0, 0" />
+            </Style>
+
+            <DataTemplate x:Key="PostItemTemplate">
+                <pancakeview:PancakeView BackgroundColor="White" CornerRadius="6">
+                    <Grid RowSpacing="0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image 
+                            Grid.Row="0"
+                            Aspect="AspectFill"
+                            Source="{Binding Imagen}"/>
+                        <Label 
+                            Grid.Row="1" 
+                            Text="{Binding Name}"
+                            Style="{StaticResource PostTitleStyle}"/>
+                        <Label 
+                            Grid.Row="2"
+                            Text="{Binding PrecioOriginal}"
+                            Style="{StaticResource PostDateStyle}"/>
+                        <Label />
+                    </Grid>
+                </pancakeview:PancakeView>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Margin="20,20,20,20">
+        <Grid>
 
-            <Label x:Name="label" Text="......" Font="40" TextColor="Black"
-                   HorizontalOptions="CenterAndExpand" 
-                   HorizontalTextAlignment="Center"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-            <Label x:Name="address" Text="......" Font="20" TextColor="Black"
-                   HorizontalOptions="CenterAndExpand" 
-                   HorizontalTextAlignment="Center"/>
+            <skia:SKCanvasView x:Name="BackgroundGradient" Grid.RowSpan="2"
+            HorizontalOptions="Fill" PaintSurface="BackgroundGradient_PaintSurface" VerticalOptions="Fill" />
 
+            <Image Grid.RowSpan="2" Aspect="AspectFill"
+            HorizontalOptions="Fill" VerticalOptions="End"
+            Source="{DynamicResource MountainImage}"/>
+            <StackLayout Padding="20,30,20,0">
+                <Grid Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="AUTO" />
+                    </Grid.ColumnDefinitions>
 
-        </StackLayout>
+                    <StackLayout>
+                        <Label x:Name="label" Style="{StaticResource Header}" Text="Busqueda" />
+                        <BoxView Grid.Row="1" Opacity="0.5" HorizontalOptions="Start" HeightRequest="2" WidthRequest="60" Color="Black" Margin="12, 0"/>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span x:Name="address"  Style="{StaticResource SubTextSemiBold}" Text="Selecccione el filtro..." />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <pancakeview:PancakeView BackgroundGradientAngle="180" BorderIsDashed="true" BackgroundGradientStartColor="BlanchedAlmond" 
+                                         BackgroundGradientEndColor="Transparent" Margin="0,170,0,0"/>
+                        <Grid WidthRequest="2" HeightRequest="200">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            
+                            <!-- CAROUSEL POSTS -->
+                            <CarouselView Grid.Row="2" CurrentItem="{Binding CurrentPost, Mode=TwoWay}" x:Name="carouselView"
+                                                        ItemTemplate="{StaticResource PostItemTemplate}" VerticalOptions="End" >
+                                <CarouselView.Margin>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="12, 48, 0, 0" />
+                                        <On Platform="Android" Value="12, 24, 0, 0" />
+                                    </OnPlatform>
+                                </CarouselView.Margin>
+                                <CarouselView.PeekAreaInsets>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="0, 0, 200, 0" />
+                                        <On Platform="Android" Value="0, 0, 600, 0" />
+                                    </OnPlatform>
+                                </CarouselView.PeekAreaInsets>
+                                <CarouselView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" SnapPointsType="Mandatory" SnapPointsAlignment="Start" ItemSpacing="12" />
+                                </CarouselView.ItemsLayout>
+                            </CarouselView>
+                            
+                        </Grid>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

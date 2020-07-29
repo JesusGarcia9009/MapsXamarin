@@ -1,31 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:local="clr-namespace:GoogleMaps.Styles"
              x:Class="GoogleMaps.MainPage" Title="Master">
     
     <MasterDetailPage.Master>
-        <!--<ContentPage
-            Title="Menú"
-            BackgroundColor="#5e5a5a"
-            Padding="0,40,0,0">
-            <Label Text="My menu"/>
-            <ListView BackgroundColor="White" x:Name="ListMenu" ItemSelected="ListMenu_ItemSelected" >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ImageCell TextColor="Black" DetailColor="Black" Height="25" 
-                                   Text="{Binding MenuTitle}"
-                                   Detail="{Binding MenuDetail}"
-                                   ImageSource="{Binding icon}">
-                        </ImageCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ContentPage>-->
-        <ContentPage Title="Menu" Padding="30" >
-            <StackLayout Spacing="0">
+        <ContentPage Title="Menu" >
+            <StackLayout>
+                <Grid ColumnSpacing="0" RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="AUTO" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="AUTO" />
+                    </Grid.RowDefinitions>
+                    <Image Aspect="AspectFill" Source="HeaderBackground.png" />
+                    <Image Aspect="Fill" Margin="0,-1,0,-1" Source="CurvedMask.png" VerticalOptions="End" />
+                </Grid>
                 <!--<Image Source="{Binding Image}" Aspect="Fill" />-->
-                <Label Text="Sample Menu" FontSize="Large" FontAttributes="Bold"></Label>
-                <ListView BackgroundColor="White" x:Name="ListMenu" ItemSelected="ListMenu_ItemSelected" >
+                <Frame Padding="10" BackgroundColor="Transparent" BorderColor="{StaticResource BorderColor}"
+                        CornerRadius="20" HasShadow="False">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Image Margin="10,0,0,0" HorizontalOptions="Center" Source="Lightning" VerticalOptions="Center" />
+                        
+                        <Label Grid.Column="1" Margin="20,0,0,0" Style="{StaticResource SubTextSemiBold}" Text="Opciones" HorizontalTextAlignment="Center" />
+                        
+                        <Image Grid.Column="2" Margin="0,0,10,0" Rotation="90" HorizontalOptions="Center" Source="Arrow" VerticalOptions="Center" />
+                        
+                    </Grid>
+                </Frame>
+                <!--<Label Margin="0,0,0,20" Text="Opciones" FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center"/>-->
+                <ListView Margin="40,0,0,0" BackgroundColor="White" x:Name="ListMenu" ItemSelected="ListMenu_ItemSelected" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ImageCell TextColor="Black" DetailColor="Black" Height="25" 
@@ -35,7 +48,5 @@
                 </ListView>
             </StackLayout>
         </ContentPage>
-        
-        
     </MasterDetailPage.Master>
 </MasterDetailPage>
