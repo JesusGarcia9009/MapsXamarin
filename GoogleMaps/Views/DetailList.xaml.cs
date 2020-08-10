@@ -1,4 +1,5 @@
-﻿using GoogleMaps.Entities;
+﻿using BurgersUIApp.ViewModels;
+using GoogleMaps.Entities;
 using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
@@ -16,117 +17,45 @@ namespace GoogleMaps.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DetailList : ContentPage
     {
-        private static bool banderaClick;
+        GoogleMaps.Entities.Filters _filter = new Entities.Filters();
 
-        public DetailList()
+        public DetailList(String tipoEstablecimiento, String tipoProducto)
         {
             InitializeComponent();
-            Title = "Ejemplo ListView 1";
-            banderaClick = true;
+            //Title = "Ejemplo ListView 1";
+            //banderaClick = true;
+            BindingContext = new MenuDetailsViewModel();
         }
 
-        protected override async void OnAppearing()
+
+        void OnCollectionViewSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            LlenarMenu();
-            await Task.Yield();
+            Burgers current = (e.CurrentSelection.FirstOrDefault() as Burgers);
+
+            ModalDetailPlace page2 = new ModalDetailPlace(current.Name, current.Description);
+
+            page2.Disappearing += OnDetailPlaceDisappearing;
+            Navigation.PushAsync(page2);
         }
 
-        public async void LlenarMenu()
+        private void OnDetailPlaceDisappearing(object sender, EventArgs eventArgs)
         {
-            DetailList oEjemploListView1Model = new DetailList();
-            listViewPlace.ItemsSource = null;
-            listViewPlace.ItemsSource = oEjemploListView1Model.ObtenerListPlaces();
-            
+            ((ModalDetailPlace)sender).Disappearing -= OnDetailPlaceDisappearing; //Unsubscribe from the event to allow the GC to collect the page and prevent memory leaks
         }
 
-        private async void OnClickOpcionSeleccionada(object sender, SelectedItemChangedEventArgs e)
+        private async void Search_Clicked(object sender, EventArgs e)
         {
-            if (banderaClick)
-            {
-                var item = e.SelectedItem as ListPlaces;
-                if ((item != null) && (item.Habilitado))
-                {
-                    var oSeleccionado = item.idOpcion;
-                    banderaClick = false;
-                    switch (oSeleccionado)
-                    {
-                        case 1:
-                            Navigation.PushAsync(new DetailList());
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                    }
-                    await Task.Run(async () =>
-                    {
-                        await Task.Delay(500);
-                        banderaClick = true;
-                    });
+            FiltersViewModel x = _filter.refreshData();
+            ModalFilterListado page2 = new ModalFilterListado(x);
 
-                }
-            } // fin banderaCLick
-        }// fin metodo OnClickOpcionSeleccionada
-
-
-
-        private ObservableCollection<ListPlaces> ObtenerListPlaces()
-        {
-
-            ObservableCollection<ListPlaces> oMenuPrincipal = new ObservableCollection<ListPlaces>();
-
-            oMenuPrincipal.Add(new ListPlaces
-            {
-                Opcion = "ListView Ejemplo 1",
-                Habilitado = true,
-                idOpcion = 1,
-                icon = "http://lorempixel.com/100/100/people/1"
-            });
-            oMenuPrincipal.Add(new ListPlaces
-            {
-                Opcion = "ListView Ejemplo 2",
-                Habilitado = true,
-                idOpcion = 2,
-                icon = "http://lorempixel.com/100/100/people/1"
-            });
-            oMenuPrincipal.Add(new ListPlaces
-            {
-                Opcion = "ListView Ejemplo 3",
-                Habilitado = true,
-                idOpcion = 3,
-                icon = "http://lorempixel.com/100/100/people/1"
-            });
-            oMenuPrincipal.Add(new ListPlaces
-            {
-                Opcion = "ListView Ejemplo 4",
-                Habilitado = true,
-                idOpcion = 4,
-                icon = "http://lorempixel.com/100/100/people/1"
-            });
-            oMenuPrincipal.Add(new ListPlaces
-            {
-                Opcion = "ListView Ejemplo 5",
-                Habilitado = true,
-                idOpcion = 5,
-                icon = "http://lorempixel.com/100/100/people/1"
-            });
-            return oMenuPrincipal;
+            page2.Disappearing += OnPage2Disappearing;
+            await Navigation.PushAsync(page2);
         }
 
-        private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void OnPage2Disappearing(object sender, EventArgs eventArgs)
         {
-            listViewPlace.BeginRefresh();
-
-            if (string.IsNullOrWhiteSpace(e.NewTextValue))
-                listViewPlace.ItemsSource = ObtenerListPlaces();
-            else
-                listViewPlace.ItemsSource = ObtenerListPlaces().Where(i => i.Opcion.Contains(e.NewTextValue));
-
-            listViewPlace.EndRefresh();
+            ((ModalFilterListado)sender).Disappearing -= OnPage2Disappearing; //Unsubscribe from the event to allow the GC to collect the page and prevent memory leaks
         }
-
 
         // background brush
         SKPaint backgroundBrush = new SKPaint()
@@ -160,8 +89,5 @@ namespace GoogleMaps.Views
             SKRect backgroundBounds = new SKRect(0, 0, info.Width, info.Height);
             canvas.DrawRect(backgroundBounds, backgroundBrush);
         }
-
-
-
     }
 }

@@ -13,19 +13,23 @@ namespace GoogleMaps
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : MasterDetailPage
     {
-        public MainPage(String tipoEstablecimiento, String tipoProducto)
+        public MainPage(String tipoEstablecimiento, String tipoProducto, bool isMap)
         {
             InitializeComponent();
-            MyMenu(tipoEstablecimiento, tipoProducto);
+            MyMenu(tipoEstablecimiento, tipoProducto, isMap);
         }
 
-        public void MyMenu(String tipoEstablecimiento, String tipoProducto)
+        public void MyMenu(String tipoEstablecimiento, String tipoProducto, bool isMap)
         {
-            Detail = new NavigationPage(new Detail(tipoEstablecimiento, tipoProducto));
+            if(isMap)
+                Detail = new NavigationPage(new Detail(tipoEstablecimiento, tipoProducto));
+            else
+                Detail = new NavigationPage(new DetailList(tipoEstablecimiento, tipoProducto));
+
             List<Menu> menu = new List<Menu>
             {
                 new Menu{ Page = new Detail(tipoEstablecimiento, tipoProducto), MenuTitle="Mi Mapa",  MenuDetail="Mapa de lugares cercanos",icon="ic_map.png"},
-                new Menu{ Page = new DetailList(), MenuTitle="Mi listado",  MenuDetail="Listado de lugares cercanos",icon="ic_list.png"},
+                new Menu{ Page = new DetailList(tipoEstablecimiento, tipoProducto), MenuTitle="Mi listado",  MenuDetail="Listado de lugares cercanos",icon="ic_list.png"},
                 new Menu{ Page = new Feed(), MenuTitle="Contactenos",  MenuDetail="Datos Personales",icon="ic_contact.png"},
             };
             ListMenu.ItemsSource = menu;

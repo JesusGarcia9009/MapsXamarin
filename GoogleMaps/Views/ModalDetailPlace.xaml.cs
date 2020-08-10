@@ -26,20 +26,21 @@ namespace GoogleMaps.Views
 
         public PlaceDetail place { get; set; }
 
-        public ModalDetailPlace(Pin item)
+        public ModalDetailPlace(String Address, String Label)
         {
             InitializeComponent();
+            address.Text = Address;
+            label.Text = Label;
 
-            address.Text = item.Address;
-            label.Text = item.Label;
+            place = this.ObtenerDetallesLugar(Label, Address);
+            //carouselView.ItemsSource = place.menuList;
+            carouselViewImg.ItemsSource = place.imagesPlace;
 
-            place = this.ObtenerDetallesLugar(item.Label, item.Address);
-            carouselView.ItemsSource = place.menuList;
         }
 
         void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            carouselView.ScrollTo((int)Math.Floor(e.NewValue));
+            //carouselView.ScrollTo((int)Math.Floor(e.NewValue));
         }
 
 
@@ -52,6 +53,7 @@ namespace GoogleMaps.Views
             resultado.Address = direccion;
 
             List<MenuPlace> listado = new List<MenuPlace>();
+            List<imagePlace> imagenes = new List<imagePlace>();
             bool detenerse = false; float f = 3.2f;
             while (!detenerse) {
                 MenuPlace temp = new MenuPlace();
@@ -66,47 +68,18 @@ namespace GoogleMaps.Views
                     detenerse = true;
                 }
                 listado.Add(temp);
+
+                imagePlace temp1 = new imagePlace();
+                temp1.Imagen = "https://www.espiamos.com/7909-home_default/botella-de-agua-espia-full-hd-con-deteccion-de-movimiento.jpg";
+                temp1.Name = "Imagen " + f.ToString();
+                imagenes.Add(temp1);
             }
             resultado.menuList = listado;
+            resultado.imagesPlace = imagenes;
 
             return resultado;
         }
 
-        // background brush
-        SKPaint backgroundBrush = new SKPaint()
-        {
-            Style = SKPaintStyle.Fill,
-            Color = Color.Red.ToSKColor()
-        };
-
-
-        private void BackgroundGradient_PaintSurface(object sender, SkiaSharp.Views.Forms.SKPaintSurfaceEventArgs e)
-        {
-            SKImageInfo info = e.Info;
-            SKSurface surface = e.Surface;
-            SKCanvas canvas = surface.Canvas;
-
-            canvas.Clear();
-
-            // get the brush based on the theme
-            SKColor gradientStart = ((Color)Application.Current.Resources["BackgroundGradientStartColor"]).ToSKColor();
-            SKColor gradientMid = ((Color)Application.Current.Resources["BackgroundGradientMidColor"]).ToSKColor();
-            SKColor gradientEnd = ((Color)Application.Current.Resources["BackgroundGradientEndColor"]).ToSKColor();
-
-            // gradient backround
-            backgroundBrush.Shader = SKShader.CreateRadialGradient
-                (new SKPoint(0, info.Height * .8f),
-                info.Height * .8f,
-                new SKColor[] { gradientStart, gradientMid, gradientEnd },
-                new float[] { 0, .5f, 1 },
-                SKShaderTileMode.Clamp);
-
-            SKRect backgroundBounds = new SKRect(0, 0, info.Width, info.Height);
-            canvas.DrawRect(backgroundBounds, backgroundBrush);
-        }
-
-
-
-
+        
     }
 }

@@ -10,6 +10,7 @@ namespace GoogleMaps
         public string PlaceName { get; set; }
         public string Address { get; set; }
         public List<MenuPlace> menuList { get; set; }
+        public List<imagePlace> imagesPlace { get; set; }
     }
 
     public class MenuPlace
@@ -17,7 +18,12 @@ namespace GoogleMaps
         public string Name { get; set; }
         public float PrecioOriginal { get; set; }
         public string Imagen { get; set; }
+    }
 
+    public class imagePlace
+    {
+        public string Name { get; set; }
+        public string Imagen { get; set; }
     }
 
 }

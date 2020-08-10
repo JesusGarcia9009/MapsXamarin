@@ -38,6 +38,9 @@
     <Compile Update="Views\ModalDetailPlace.xaml.cs">
       <DependentUpon>ModalDetailPlace.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\ModalFilterListado.xaml.cs">
+      <DependentUpon>ModalFilterListado.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ModalFilter.xaml.cs">
       <DependentUpon>ModalFilter.xaml</DependentUpon>
     </Compile>
@@ -57,6 +60,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ModalDetailPlace.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ModalFilterListado.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ModalFilter.xaml">

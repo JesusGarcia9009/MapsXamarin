@@ -4,10 +4,14 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:PanCake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
              mc:Ignorable="d"
              xmlns:local="clr-namespace:GoogleMaps.Styles"
              x:Name="BrowseItemsPage"
              x:Class="GoogleMaps.Views.DetailList">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="outline_search.png" Text="Search" Clicked="Search_Clicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>
 
@@ -24,29 +28,64 @@
             Source="{DynamicResource MountainImage}"/>
 
 
-            <StackLayout Padding="20,15,20,0">
-                <Grid Margin="0,2,0,0">
-                    
+            <StackLayout>
+                <StackLayout>
+                    <!-- 2.2 Rounded board-->
+                    <PanCake:PancakeView Grid.Row="2"  CornerRadius="30" BackgroundColor="Transparent">
+                        <!-- Struture for the next block-->
+                        <Grid Padding="25,30">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <!-- 2.3 Legend-->
+                            <Label Grid.Row="0" Grid.Column="0" Text="56 Restaurants" FontAttributes="Bold" FontSize="18"/>
+                            <Image Grid.Row="0" Grid.Column="1" Source="More"/>
 
-                    <StackLayout>
-                        <Label Style="{StaticResource Header}" Text="Lugares" />
-                        <SearchBar Placeholder="Buscar..." TextChanged="SearchBar_OnTextChanged"></SearchBar>
-                        <ListView x:Name="listViewPlace" Margin="0,5,0,0" CachingStrategy="RecycleElement" HasUnevenRows="True" >
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell >
-                                        <StackLayout Orientation="Horizontal">
-                                            <Image Source="{Binding icon}"/>
-                                            <StackLayout>
-                                                <Label Text="{Binding Opcion}"/>
-                                            </StackLayout>
+                            <CollectionView ItemsSource="{Binding burgers}" VerticalOptions="Start" VerticalScrollBarVisibility="Never"
+                                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" SelectionMode="Single" SelectionChanged="OnCollectionViewSelectionChanged">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout>
+                                            <Frame HasShadow="False" BackgroundColor="#fef6f2" HeightRequest="90" CornerRadius="20" Margin="0,5">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <PanCake:PancakeView Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" CornerRadius="12" Margin="0,0,10,0">
+                                                        <Image Source="{Binding Picture}" HeightRequest="100" WidthRequest="95" Aspect="AspectFill"/>
+                                                    </PanCake:PancakeView>
+                                                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Name}" FontSize="15" FontAttributes="Bold"/>
+                                                    <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Description}" FontSize="15" TextColor="#a4a7b6"/>
+                                                    <Image Grid.Row="2" Grid.Column="1" Source="Star" HorizontalOptions="Start" WidthRequest="20"/>
+                                                    <Label Grid.Row="2" Grid.Column="1" Margin="30,0,0,0" FontSize="15" VerticalOptions="Center">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding Rating}" FontAttributes="Bold" />
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </Grid>
+                                            </Frame>
                                         </StackLayout>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackLayout>
-                </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+
+                        </Grid>
+                    </PanCake:PancakeView>
+                </StackLayout>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

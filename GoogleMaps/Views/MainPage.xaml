@@ -4,7 +4,7 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              xmlns:local="clr-namespace:GoogleMaps.Styles"
              x:Class="GoogleMaps.MainPage" Title="Master">
-    
+
     <MasterDetailPage.Master>
         <ContentPage Title="Menu" >
             <StackLayout>
@@ -19,24 +19,6 @@
                     <Image Aspect="AspectFill" Source="HeaderBackground.png" />
                     <Image Aspect="Fill" Margin="0,-1,0,-1" Source="CurvedMask.png" VerticalOptions="End" />
                 </Grid>
-                <!--<Image Source="{Binding Image}" Aspect="Fill" />-->
-                <Frame Padding="10" BackgroundColor="Transparent" BorderColor="{StaticResource BorderColor}"
-                        CornerRadius="20" HasShadow="False">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Image Margin="10,0,0,0" HorizontalOptions="Center" Source="Lightning" VerticalOptions="Center" />
-                        
-                        <Label Grid.Column="1" Margin="20,0,0,0" Style="{StaticResource SubTextSemiBold}" Text="Opciones" HorizontalTextAlignment="Center" />
-                        
-                        <Image Grid.Column="2" Margin="0,0,10,0" Rotation="90" HorizontalOptions="Center" Source="Arrow" VerticalOptions="Center" />
-                        
-                    </Grid>
-                </Frame>
                 <!--<Label Margin="0,0,0,20" Text="Opciones" FontSize="Large" FontAttributes="Bold" HorizontalTextAlignment="Center"/>-->
                 <ListView Margin="40,0,0,0" BackgroundColor="White" x:Name="ListMenu" ItemSelected="ListMenu_ItemSelected" >
                     <ListView.ItemTemplate>

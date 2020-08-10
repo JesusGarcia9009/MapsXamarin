@@ -105,7 +105,7 @@ namespace GoogleMaps.Views
             Pin item = e.Pin;
             //DisplayAlert(item.Label, item.Address, "Cerrar");
 
-            ModalDetailPlace page2 = new ModalDetailPlace(item);
+            ModalDetailPlace page2 = new ModalDetailPlace(item.Address, item.Label);
 
             page2.Disappearing += OnDetailPlaceDisappearing;
             Navigation.PushAsync(page2);

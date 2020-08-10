@@ -20,7 +20,7 @@ using Color = Xamarin.Forms.Color;
 namespace GoogleMaps.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ModalFilter : ContentPage
+    public partial class ModalFilterListado : ContentPage
     {
         private Establecimiento SelectedEstablecimiento { get; set; }
 
@@ -29,14 +29,14 @@ namespace GoogleMaps.Views
         public Establecimiento[] Establecimientos { get; set; }
         public Producto[] Productos { get; set; }
 
-        public ModalFilter(FiltersViewModel listados)
+        public ModalFilterListado(FiltersViewModel listados)
         {
             InitializeComponent();
             this.Productos = listados.Productos;
             this.Establecimientos = listados.Establecimientos;
 
-            prod.ItemsSource = Productos;
-            esta.ItemsSource = Establecimientos;
+            producto.ItemsSource = Productos;
+            establecimiento.ItemsSource = Establecimientos;
 
         }
 
@@ -44,17 +44,17 @@ namespace GoogleMaps.Views
         {
             string nombreProducto = ""; int idProducto = -1;
             string nombreEstablecimiento = ""; int idEstablecimiento = -1;
-            if (prod.SelectedIndex != -1)
+            if (producto.SelectedIndex != -1)
             {
-                idProducto = ((Producto)prod.ItemsSource[prod.SelectedIndex]).idProducto;
-                nombreProducto = ((Producto)prod.ItemsSource[prod.SelectedIndex]).nombreProducto.ToString();
+                idProducto = ((Producto)producto.ItemsSource[producto.SelectedIndex]).idProducto;
+                nombreProducto = ((Producto)producto.ItemsSource[producto.SelectedIndex]).nombreProducto.ToString();
             }
-            if (esta.SelectedIndex != -1)
+            if (establecimiento.SelectedIndex != -1)
             {
-                idEstablecimiento = ((Establecimiento)esta.ItemsSource[esta.SelectedIndex]).idEstablecimiento;
-                nombreEstablecimiento = ((Establecimiento)esta.ItemsSource[esta.SelectedIndex]).nombreEstablecimiento.ToString();
+                idEstablecimiento = ((Establecimiento)establecimiento.ItemsSource[establecimiento.SelectedIndex]).idEstablecimiento;
+                nombreEstablecimiento = ((Establecimiento)establecimiento.ItemsSource[establecimiento.SelectedIndex]).nombreEstablecimiento.ToString();
             }
-            await Navigation.PushModalAsync(new MainPage(nombreEstablecimiento, nombreProducto, true));
+            await Navigation.PushModalAsync(new MainPage(nombreEstablecimiento, nombreProducto, false));
 
         }
 
@@ -86,19 +86,8 @@ namespace GoogleMaps.Views
                 new float[] { 0, .5f, 1 },
                 SKShaderTileMode.Clamp);
 
-            //backgroundBrush.Shader = SKShader.CreateLinearGradient(
-            //                              new SKPoint(0, 0),
-            //                              new SKPoint(info.Width, info.Height),
-            //                              new SKColor[] {
-            //                                  gradientStart, gradientEnd },
-            //                              new float[] { 0, 1 },
-            //                              SKShaderTileMode.Clamp);
             SKRect backgroundBounds = new SKRect(0, 0, info.Width, info.Height);
             canvas.DrawRect(backgroundBounds, backgroundBrush);
-
-
         }
-
-
     }
 }

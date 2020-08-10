@@ -145,4 +145,16 @@
   <ItemGroup>
     <BundleResource Include="Resources\coffee_pin.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\CompleteHeart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\EmptyHeart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\MainBurger.png" />
+  </ItemGroup>
 </Project>

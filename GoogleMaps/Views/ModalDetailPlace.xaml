@@ -4,6 +4,7 @@
              xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:PanCake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
              xmlns:local="clr-namespace:GoogleMaps.Styles"
              x:Class="GoogleMaps.Views.ModalDetailPlace">
     <ContentPage.Resources>
@@ -37,7 +38,26 @@
                 <Setter Property="Margin" Value="12, 12, 0, 0" />
             </Style>
 
-            <DataTemplate x:Key="PostItemTemplate">
+            <DataTemplate x:Key="ItemImg">
+                <pancakeview:PancakeView BackgroundColor="White" CornerRadius="6">
+                    <Grid RowSpacing="0" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image 
+                            Grid.Row="0"
+                            Aspect="AspectFill"
+                            Source="{Binding Imagen}"/>
+                        <Label 
+                            Grid.Row="1" 
+                            Text="{Binding Name}"
+                            Style="{StaticResource PostTitleStyle}"/>
+                    </Grid>
+                </pancakeview:PancakeView>
+            </DataTemplate>
+            <DataTemplate x:Key="ItemProduct">
                 <pancakeview:PancakeView BackgroundColor="White" CornerRadius="6">
                     <Grid RowSpacing="0" >
                         <Grid.RowDefinitions>
@@ -66,70 +86,93 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-
+            <!-- 2.0 Main structure-->
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
-            <skia:SKCanvasView x:Name="BackgroundGradient" Grid.RowSpan="2"
-            HorizontalOptions="Fill" PaintSurface="BackgroundGradient_PaintSurface" VerticalOptions="Fill" />
-
-            <Image Grid.RowSpan="2" Aspect="AspectFill"
-            HorizontalOptions="Fill" VerticalOptions="End"
-            Source="{DynamicResource MountainImage}"/>
-            <StackLayout Padding="20,30,20,0">
-                <Grid Margin="0,20,0,0">
+            <!-- 2.1 Main body-->
+            <Image Grid.Row="0" Source="bar.jpg" Aspect="AspectFit" VerticalOptions="Start"/>
+            <Label Grid.Row="1" Text="Burgers" TextColor="White" FontAttributes="Bold" FontSize="35" Margin="25,-85,0,0"/>
+            <!-- 2.2 Rounded board-->
+            <PanCake:PancakeView Grid.Row="2"  CornerRadius="30" BackgroundColor="White" Margin="0,-40">
+                <!-- Struture for the next block-->
+                <Grid Padding="25,30">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="AUTO" />
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                    <StackLayout>
-                        <Label x:Name="label" Style="{StaticResource Header}" Text="Busqueda" />
-                        <BoxView Grid.Row="1" Opacity="0.5" HorizontalOptions="Start" HeightRequest="2" WidthRequest="60" Color="Black" Margin="12, 0"/>
-                        <Label>
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span x:Name="address"  Style="{StaticResource SubTextSemiBold}" Text="Selecccione el filtro..." />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                    <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Vertical">
+                        <StackLayout>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="AUTO" />
+                                </Grid.ColumnDefinitions>
 
-                        <pancakeview:PancakeView BackgroundGradientAngle="180" BorderIsDashed="true" BackgroundGradientStartColor="BlanchedAlmond" 
-                                         BackgroundGradientEndColor="Transparent" Margin="0,170,0,0"/>
-                        <Grid WidthRequest="2" HeightRequest="200">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            
-                            <!-- CAROUSEL POSTS -->
-                            <CarouselView Grid.Row="2" CurrentItem="{Binding CurrentPost, Mode=TwoWay}" x:Name="carouselView"
-                                                        ItemTemplate="{StaticResource PostItemTemplate}" VerticalOptions="End" >
-                                <CarouselView.Margin>
-                                    <OnPlatform x:TypeArguments="Thickness">
-                                        <On Platform="iOS" Value="12, 48, 0, 0" />
-                                        <On Platform="Android" Value="12, 24, 0, 0" />
-                                    </OnPlatform>
-                                </CarouselView.Margin>
-                                <CarouselView.PeekAreaInsets>
-                                    <OnPlatform x:TypeArguments="Thickness">
-                                        <On Platform="iOS" Value="0, 0, 200, 0" />
-                                        <On Platform="Android" Value="0, 0, 600, 0" />
-                                    </OnPlatform>
-                                </CarouselView.PeekAreaInsets>
-                                <CarouselView.ItemsLayout>
-                                    <LinearItemsLayout Orientation="Horizontal" SnapPointsType="Mandatory" SnapPointsAlignment="Start" ItemSpacing="12" />
-                                </CarouselView.ItemsLayout>
-                            </CarouselView>
-                            
-                        </Grid>
-                    </StackLayout>
+                                <StackLayout>
+                                    <Label x:Name="label" Style="{StaticResource Header}" Text="Busqueda" />
+                                    <BoxView Grid.Row="1" Opacity="0.5" HorizontalOptions="Start" HeightRequest="2" WidthRequest="60" Color="Black" Margin="12, 0"/>
+                                    <Label>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span x:Name="address"  Style="{StaticResource SubTextSemiBold}" Text="Selecccione el filtro..." />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <pancakeview:PancakeView BackgroundGradientAngle="180" BorderIsDashed="true" BackgroundGradientStartColor="BlanchedAlmond" 
+                                         BackgroundGradientEndColor="Transparent" />
+                                    <Grid HeightRequest="200">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <!-- CAROUSEL IMAGENES -->
+                                        <CarouselView CurrentItem="{Binding CurrentPost, Mode=TwoWay}" x:Name="carouselViewImg"
+                                                        ItemTemplate="{StaticResource ItemImg}" VerticalOptions="End" >
+                                            <CarouselView.Margin>
+                                                <OnPlatform x:TypeArguments="Thickness">
+                                                    <On Platform="iOS" Value="12, 48, 0, 0" />
+                                                    <On Platform="Android" Value="12, 30, 0, 0" />
+                                                </OnPlatform>
+                                            </CarouselView.Margin>
+                                            <CarouselView.PeekAreaInsets>
+                                                <OnPlatform x:TypeArguments="Thickness">
+                                                    <On Platform="iOS" Value="0, 0, 200, 0" />
+                                                    <On Platform="Android" Value="0, 0, 300, 0" />
+                                                </OnPlatform>
+                                            </CarouselView.PeekAreaInsets>
+                                            <CarouselView.ItemsLayout>
+                                                <LinearItemsLayout Orientation="Horizontal" SnapPointsType="Mandatory" SnapPointsAlignment="Start" ItemSpacing="12" />
+                                            </CarouselView.ItemsLayout>
+                                        </CarouselView>
+                                    </Grid>
+                                    <Grid WidthRequest="2" HeightRequest="200">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                    </Grid>
+                                </StackLayout>
+                            </Grid>
+                            <Grid WidthRequest="20" HeightRequest="20"></Grid>
+                        </StackLayout>
+                    </ScrollView>
+
                 </Grid>
-            </StackLayout>
+            </PanCake:PancakeView>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
